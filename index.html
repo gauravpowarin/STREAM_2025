@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Science of the Siphon</title>
+    <!-- Use Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .slide-content-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            min-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .slide-content-container {
+                flex-direction: row;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        .slide-in-right {
+            animation: slideInRight 0.5s ease-in-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .loading-animation {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #3b82f6;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+    <!-- Main Slideshow Container -->
+    <div class="bg-white rounded-3xl shadow-xl overflow-hidden max-w-3xl w-full p-8 transition-all duration-300">
+        
+        <!-- Slide Title -->
+        <h1 id="slide-title" class="text-4xl md:text-5xl font-extrabold text-center text-gray-800 mb-2 leading-tight"></h1>
+        
+        <!-- Slide Subtitle / Subtitle -->
+        <p id="slide-subtitle" class="text-lg md:text-xl text-center text-gray-500 mb-8"></p>
+
+        <!-- Slide Content Area -->
+        <div id="slide-content" class="slide-content-container">
+            <!-- Loading Indicator -->
+            <div id="loading-indicator" class="loading-animation hidden"></div>
+            <!-- Slide Image -->
+            <div class="w-full md:w-1/2 flex justify-center">
+                <img id="slide-image" src="" alt="Slide Image" class="rounded-2xl shadow-lg border-2 border-gray-200 object-cover w-full h-auto fade-in">
+            </div>
+
+            <!-- Slide Text Content -->
+            <div class="w-full md:w-1/2 text-center md:text-left">
+                <p id="slide-text" class="text-base md:text-lg text-gray-700 leading-relaxed slide-in-right"></p>
+            </div>
+        </div>
+
+        <!-- Navigation and Counter -->
+        <div class="flex justify-between items-center mt-4">
+            <button id="prev-btn" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                Previous
+            </button>
+            <span id="slide-counter" class="text-gray-500 font-medium text-lg"></span>
+            <button id="next-btn" class="bg-blue-500 text-white font-bold py-2 px-6 rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                Next
+            </button>
+        </div>
+
+    </div>
+
+    <script>
+        const slides = [
+            {
+                title: 'The Magic of Water:',
+                subtitle: 'A Science Trick',
+                image: 'https://placehold.co/600x400/87CEEB/ffffff?text=The+Magic+of+Water',
+                text: 'How can water move from one bottle to another all by itself? In this presentation, we will explore the science behind this amazing trick!'
+            },
+            {
+                title: 'The Trick',
+                subtitle: '',
+                image: 'https://placehold.co/600x400/ADD8E6/ffffff?text=The+Water+Flow',
+                text: 'In the video, a special setup makes it look like water is moving in a circle on its own. It is poured into the top, and it seems to flow forever. It looks like a magic trick!'
+            },
+            {
+                title: "Is It Magic?",
+                subtitle: "What's the Secret?",
+                image: 'https://placehold.co/600x400/90EE90/ffffff?text=Not+Magic,+It\'s+Science!',
+                text: "No, it's not magic. It's **science**! The water is moving because of a natural law that we can see all around us. The system uses something called a **siphon**."
+            },
+            {
+                title: 'The Siphon Principle',
+                subtitle: '',
+                image: 'https://placehold.co/600x400/F08080/ffffff?text=Simple+Siphon',
+                text: 'A siphon is a simple way to move a liquid from a higher place to a lower place using a tube. You may have seen this method used to drain water from a tank or to take fuel out of a vehicle.'
+            },
+            {
+                title: 'The Two Main Forces',
+                subtitle: 'Gravity and Air Pressure',
+                image: 'https://placehold.co/600x400/DDA0DD/ffffff?text=Gravity+and+Pressure',
+                text: 'The water moves because of two main forces: **Gravity**, which pulls everything down, and **Air Pressure**, which pushes on the water to keep the flow going.'
+            },
+            {
+                title: 'How It Works, Step-by-Step',
+                subtitle: 'A Simple Explanation',
+                image: 'https://placehold.co/600x400/FFD700/ffffff?text=Step-by-Step',
+                text: 'First, the system is filled with water. Then, gravity pulls the water down the tube on the lower side. As the water moves down, air pressure pushes the water from the top bottle to replace it, creating a continuous flow.'
+            },
+            {
+                title: "Let's Try It Ourselves!",
+                subtitle: 'Your Own Science Project',
+                image: 'https://placehold.co/600x400/87CEFA/ffffff?text=DIY+Experiment',
+                text: 'You only need two plastic bottles, some tubing, a funnel, and water. Simply attach the bottles and tube, making sure the tube is full of water. Then, pour water into the funnel and watch the flow!'
+            },
+            {
+                title: 'The Main Idea',
+                subtitle: 'Science Is Everywhere',
+                image: 'https://placehold.co/600x400/8FBC8F/ffffff?text=Science+is+Everywhere',
+                text: 'This simple trick shows us a real scientific principle in action. Science is not just in books; it is all around us, in the small things we see every day.'
+            }
+        ];
+
+        const slideTitle = document.getElementById('slide-title');
+        const slideSubtitle = document.getElementById('slide-subtitle');
+        const slideImage = document.getElementById('slide-image');
+        const slideText = document.getElementById('slide-text');
+        const slideCounter = document.getElementById('slide-counter');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const slideContent = document.getElementById('slide-content');
+
+        let currentSlideIndex = 0;
+        let isTransitioning = false;
+
+        // Function to update the content of the slide
+        function showSlide(index) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            
+            // Show loading indicator and hide content
+            loadingIndicator.classList.remove('hidden');
+            slideContent.classList.add('hidden');
+            
+            // Check for valid index and wrap around
+            if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else {
+                currentSlideIndex = index;
+            }
+            
+            // Simulate a delay for the "loading" effect
+            setTimeout(() => {
+                const slide = slides[currentSlideIndex];
+                
+                // Update the HTML elements with new content
+                slideTitle.textContent = slide.title;
+                slideSubtitle.textContent = slide.subtitle;
+                slideImage.src = slide.image;
+                slideText.innerHTML = slide.text;
+                slideCounter.textContent = `Slide ${currentSlideIndex + 1} of ${slides.length}`;
+                
+                // Show content and hide loading indicator
+                loadingIndicator.classList.add('hidden');
+                slideContent.classList.remove('hidden');
+                isTransitioning = false;
+            }, 500); // 500ms delay for a smoother transition
+        }
+        
+        // Event listeners for navigation buttons
+        prevBtn.addEventListener('click', () => {
+            showSlide(currentSlideIndex - 1);
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            showSlide(currentSlideIndex + 1);
+        });
+
+        // Initial call to display the first slide
+        showSlide(currentSlideIndex);
+    </script>
+</body>
+</html>
