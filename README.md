@@ -34,6 +34,7 @@ Here is an example of a slide object:
 
 ## **Credits**
 
+* **Developed by:** Gaurav Powar
 * **Developed for:** The Jigyansa Club of IISER Berhampur  
 * **CSS Framework:** [Tailwind CSS](https://tailwindcss.com/)  
 * **Placeholder Images:** [placehold.co](https://placehold.co/)
